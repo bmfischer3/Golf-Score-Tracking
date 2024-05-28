@@ -3,6 +3,7 @@
 # Milesstones - Keep track of score for one player, and ask for the course name and location. 
 # Later on, keep this in a database. 
 
+import time
 
 class Player:
     def __init__(self, player_name, handicap):
@@ -42,11 +43,20 @@ class Round:
             player_score[hole_number] = stroke_count
         print(player_score)
 
+    def start_round(self):
+        print("The round is starting...")
+        time.sleep(2)
+        for i in self.scorecard:
+            if any([True for k, v in self.scorecard.items() if v == 0]):
+                score = input(f"What did {i} score for hole number {self.scorecard[1]}?  ")
+                self.scorecard[1] = score
+            else:
+                print(f"All scores are up to date")
+
+
 pebble_hole_list = {
     1:0,
-    2:0,
-    3:0,
-    4:0
+    2:0
 }
 
 brian = Player("Brian", 15)
@@ -56,9 +66,11 @@ players = ["Brian", "Kyle", "Jack", "Robin"]
 
 print(pebble.add_players(players))
 
-pebble.modify_score("Brian", 2, 4)
-pebble.modify_score("Robin", 2, 3)
+# pebble.modify_score("Brian", 2, 4)
+# pebble.modify_score("Robin", 2, 3)
 
 print(pebble.scorecard)
 
+pebble.start_round()
 
+# 
