@@ -1,7 +1,13 @@
 # Golf
-# Goal 1 - Keep track of score for multiple players during a round of 18
-# Milesstones - Keep track of score for one player, and ask for the course name and location. 
-# Later on, keep this in a database. 
+# Functions
+# 1 - Keep track of the scores for up to 4 players in a database by date and course.  
+# 2 - Based on those scores, run functions to determine who's the winner of various games. 
+# 2A - Give updates on the extra games to determine standings and what needs to be done by each individual party to win. 
+# 3 - Incorporate scorecard API to pull in course data, pars, etc. https://golfbert.com/api/tutorial 
+# 4 - 
+
+
+
 
 import time
 
@@ -43,20 +49,35 @@ class Round:
             player_score[hole_number] = stroke_count
         print(player_score)
 
-    def start_round(self):
+
+    def get_nth_hole(self, n=0):
+        if n < 0:
+            n += len(self.hole_list)
+        for i, key in enumerate(self.hole_list.keys()):
+            if i == n:
+                return key
+        raise IndexError("Hole index out of range.")
+
+    def complete_hole(self):
         print("The round is starting...")
         time.sleep(2)
-        for i in self.scorecard:
-            if any([True for k, v in self.scorecard.items() if v == 0]):
-                score = input(f"What did {i} score for hole number {self.scorecard[1]}?  ")
-                self.scorecard[1] = score
-            else:
-                print(f"All scores are up to date")
+        starting_hole_num = int(input(f"What hole number are you starting on? "))
+        for name, scorecard in self.scorecard.items():
+            for hole_num, score in scorecard.items():
+                hole_key = (list(scorecard)[0] + starting_hole_num - 1)
+                if hole_num == hole_key:
+                    strokes = input(f"What did {name} score for hole number {hole_num}: ")
+                    self.modify_score(name, hole_num, strokes)
+                    print(f"{name}'s score for hole #{hole_num} has been updated to {strokes}.")
+
 
 
 pebble_hole_list = {
     1:0,
-    2:0
+    2:0,
+    3:0,
+    4:0,
+    5:0
 }
 
 brian = Player("Brian", 15)
@@ -70,7 +91,6 @@ print(pebble.add_players(players))
 # pebble.modify_score("Robin", 2, 3)
 
 print(pebble.scorecard)
-
-pebble.start_round()
+pebble.complete_hole()
 
 # 
