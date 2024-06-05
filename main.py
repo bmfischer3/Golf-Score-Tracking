@@ -18,7 +18,6 @@ class Player:
         self.handicap = handicap
 
 class Round:
-    
     STARTING_SCORES = {
             1:0,
             2:0,
@@ -48,14 +47,11 @@ class Round:
         self.players = []
         self.hole_list = hole_list
         self.scorecard = {}
-
         self._title = ""
  
     
     def get_all_totals(self) -> dict:
         """Get totals of all players in 
-
-
 
         Returns:
             dict: ex
@@ -75,15 +71,20 @@ class Round:
     def set_title(self, name: str):
         self._title = name.strip("The ")
 
-
-
     def add_players(self, player_list):
+        """ Adds a list of players to the round. 
+
+        player_list = ['John', 'James', 'Jane']
+
+        Args:
+            player_list (list): list of players. 
+        """
         self.player_list = player_list
         for i in player_list:
             self.players.append(i)
             print(f"{i} has been successfully added to the round.")
         # Create scorekeeping dictionary
-        self.scorecard.update({player: STARTING_SCORES.copy() for player in player_list})
+        self.scorecard.update({player: Round.STARTING_SCORES.copy() for player in player_list})
     
     def remove_player(self, player_name):
         if player_name in self.players:
@@ -95,10 +96,40 @@ class Round:
             print(f"{player_name} is not in this round.")
     
     def modify_score(self, player_name, hole_number, stroke_count):
+        """Updates score for a specific player and hole number. 
+
+        Args:
+            player_name (string): player_name that is in players list. 
+            hole_number (int): hole number
+            stroke_count (int): number of strokes for hole
+        """
         player_score = self.scorecard.get(player_name)
         if player_score is not None:
             player_score[hole_number] = stroke_count
 
+    def get_indv_score(self):
+        name = input("What is the player's name you are requesting: ")
+        hole = input("What is the hole number you are requesting? \n Valid responses are: Front 9, Back 9, All: ")
+
+        if name in players:
+            if hole == 'Front 9':
+                for k, v in self.scorecard.items():
+                    if k < 10:
+                        print(k, v)
+                pass
+            elif hole == 'Back 9':
+                # return back 9 scorecard
+                pass
+            elif hole == 'All': 
+                # return entire scorecard:
+                pass
+            else:
+                print(f"{hole} is not a valid response")
+        else:
+            print(f"{name} is not a player in this round, please check the spelling on the name you submitted")
+
+        
+    
 
     def get_nth_hole(self, n=0):
         if n < 0:
@@ -177,11 +208,8 @@ players = ["Brian", "Kyle", "Jack", "Robin"]
 print(pebble.add_players(players))
 
 pebble.modify_score("Brian", 2, 5)
-# pebble.modify_score("Robin", 2, 3)
+pebble.modify_score("Robin", 2, 3)
 
 print(pebble.scorecard)
-
-
-pebble.total = 5
 
 pebble.get_all_totals()
