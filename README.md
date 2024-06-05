@@ -1,7 +1,27 @@
-# Golf
-# Functions
-# 1 - Keep track of the scores for up to 4 players in a database by date and course.  
-# 2 - Based on those scores, run functions to determine who's the winner of various games. 
-# 2A - Give updates on the extra games to determine standings and what needs to be done by each individual party to win. 
-# 3 - Incorporate scorecard API to pull in course data, pars, etc. https://golfbert.com/api/tutorial 
-# 4 - 
+# Golf Score Tracker
+
+Welcome to my Golf Score Tracking Project. 
+
+This application is designed to help you keep track of scores for up to four players in a golf game. It provides basic operations such as updating scores, changing scores, and determining the winner of the game.
+
+
+## Features
+- Track scores for up to four players
+- Update and change player scores easily
+- Determine the winner at the end of the game. 
+- Determine the winner of various other games. 
+
+## Installation
+
+To get started with the Golf Score Tracker, you need to clone the repository and install the necessary dependencies.
+
+```bash
+git clone https://github.com/bmfischer3/golf-score-tracking.git
+cd golf-score-tracker
+```
+
+## Usage
+1. Add players: Start by adding up to four players to the game.
+2. Update Scores: Use teh application to update scores after each hole. 
+3. Change Scores: If needed, scores can be changed to correct any mistakes. 
+4. Determine Winner: At the end of the game, the application will determine and display the winner. 
