@@ -39,6 +39,12 @@ class Round:
             18:0
         }
     
+    FRONT_BACK_FULL_TOTALS = {
+        'front9_total': 0,
+        'back9_total': 0,
+        'full18_total': 0
+        }
+    
     def __init__(self, course_name, course_location, slope, yardage, hole_list):
         self.course_name = course_name
         self.course_location = course_location
@@ -47,6 +53,7 @@ class Round:
         self.players = []
         self.hole_list = hole_list
         self.scorecard = {}
+        self.round_totals = {}
         self._title = ""
  
     def start_round(self) -> None:
@@ -112,26 +119,17 @@ class Round:
         self.scorecard.update({player: Round.STARTING_SCORES.copy() for player in player_list})
 
 
-    def get_round_totals(self):
-        totals = {}
-        front9 = {}
-        back9 = {}
+    def get_round_totals(self):    
+        self.round_totals.update({player: Round.FRONT_BACK_FULL_TOTALS.copy() for player in self.player_list})
+        print(self.round_totals)
         for player_name, scores in self.scorecard.items():
-            total_score = sum(scores.values())
-            totals[player_name] = total_score
-            print(f"{player_name} shot a total of {total_score}")
-        return totals
-        
-        
-        
-        # for player_name in self.players:
-        #     front9 = 0
-        #     back9 = 0
-        #     for name in self.scorecard:
-        #         for hole_number in name.keys():
-        #             total_score = 0
-        #             total_score += int(name[hole_number]) 
-        #     print(f"{player_name} shot a {total_score}")
+            self.round_totals['front9_total'] = sum(list(scores.values())[:9])
+            self.round_totals['back9_total'] = sum(list(scores.values())[10:18])
+            self.round_totals['full18_total'] = self.round_totals['front9_total'] + self.round_totals['back9_total']
+            print(f"{player_name}'s front 9 total is {self.round_totals['front9_total']}.")
+            print(f"{player_name}'s back 9 total is {self.round_totals['back9_total']}.")
+            print(f"{player_name}'s 18 hole total is {self.round_totals['full18_total']}")
+
     
     def remove_player(self, player_name):
         if player_name in self.players:
