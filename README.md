@@ -22,6 +22,6 @@ cd golf-score-tracker
 
 ## Usage
 1. Add players: Start by adding up to four players to the game.
-2. Update Scores: Use teh application to update scores after each hole. 
+2. Update Scores: Use the application to update scores after each hole. 
 3. Change Scores: If needed, scores can be changed to correct any mistakes. 
 4. Determine Winner: At the end of the game, the application will determine and display the winner. 

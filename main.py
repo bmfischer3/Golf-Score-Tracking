@@ -39,6 +39,12 @@ class Round:
             18:0
         }
     
+    FRONT_BACK_FULL_TOTALS = {
+        'front9_total': 0,
+        'back9_total': 0,
+        'full18_total': 0
+        }
+    
     def __init__(self, course_name, course_location, slope, yardage, hole_list):
         self.course_name = course_name
         self.course_location = course_location
@@ -47,8 +53,34 @@ class Round:
         self.players = []
         self.hole_list = hole_list
         self.scorecard = {}
+        self.round_totals = {}
         self._title = ""
  
+    def start_round(self) -> None:
+        """Initiates the a round. 
+    
+        """
+        # Asks for number of players and their names. 
+        num_players = int(input("Enter the number of players: "))
+        starting_list = []
+        for i in range(0, num_players):
+            counter = int(i+1)
+            ele = str(input(f"Please provide the name of player {counter}: "))
+            starting_list.append(ele)
+        self.add_players(starting_list)
+
+       # Loops through the dictionary created for those players and updates with inputs. 
+        for hole_number in range(1, 19):
+            for player_name in self.players:
+                if hole_number > 18:
+                    break
+                else:
+                    stroke_count = int(input(f"Enter strokes for {player_name} on hole {hole_number}: "))
+                    self.modify_score(player_name, hole_number, stroke_count)
+        
+        # Provides the results of the round. 
+        
+        self.get_round_totals()
     
     def get_all_totals(self) -> dict:
         """Get totals of all players in 
@@ -85,6 +117,19 @@ class Round:
             print(f"{i} has been successfully added to the round.")
         # Create scorekeeping dictionary
         self.scorecard.update({player: Round.STARTING_SCORES.copy() for player in player_list})
+
+
+    def get_round_totals(self):    
+        self.round_totals.update({player: Round.FRONT_BACK_FULL_TOTALS.copy() for player in self.player_list})
+        print(self.round_totals)
+        for player_name, scores in self.scorecard.items():
+            self.round_totals['front9_total'] = sum(list(scores.values())[:9])
+            self.round_totals['back9_total'] = sum(list(scores.values())[9:18])
+            self.round_totals['full18_total'] = self.round_totals['front9_total'] + self.round_totals['back9_total']
+            print(f"{player_name}'s front 9 total is {self.round_totals['front9_total']}.")
+            print(f"{player_name}'s back 9 total is {self.round_totals['back9_total']}.")
+            print(f"{player_name}'s 18 hole total is {self.round_totals['full18_total']}")
+
     
     def remove_player(self, player_name):
         if player_name in self.players:
@@ -127,9 +172,6 @@ class Round:
                 print(f"{hole} is not a valid response")
         else:
             print(f"{name} is not a player in this round, please check the spelling on the name you submitted")
-
-        
-    
 
     def get_nth_hole(self, n=0):
         if n < 0:
@@ -205,11 +247,15 @@ pebble = Round("Pebble Beach", "Del Monte, CA", 145.0, 6828, pebble_hole_list)
 
 players = ["Brian", "Kyle", "Jack", "Robin"]
 
-print(pebble.add_players(players))
+# print(pebble.add_players(players))
 
-pebble.modify_score("Brian", 2, 5)
-pebble.modify_score("Robin", 2, 3)
+# pebble.modify_score("Brian", 2, 5)
+# pebble.modify_score("Robin", 2, 3)
 
-print(pebble.scorecard)
+# print(pebble.scorecard)
 
-pebble.get_all_totals()
+# pebble.get_all_totals()
+
+pebble.start_round()
+
+# pebble.get_round_totals()
