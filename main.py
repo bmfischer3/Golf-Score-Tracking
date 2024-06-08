@@ -124,7 +124,7 @@ class Round:
         print(self.round_totals)
         for player_name, scores in self.scorecard.items():
             self.round_totals['front9_total'] = sum(list(scores.values())[:9])
-            self.round_totals['back9_total'] = sum(list(scores.values())[10:18])
+            self.round_totals['back9_total'] = sum(list(scores.values())[9:18])
             self.round_totals['full18_total'] = self.round_totals['front9_total'] + self.round_totals['back9_total']
             print(f"{player_name}'s front 9 total is {self.round_totals['front9_total']}.")
             print(f"{player_name}'s back 9 total is {self.round_totals['back9_total']}.")
